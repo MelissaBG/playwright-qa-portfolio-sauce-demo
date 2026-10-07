@@ -1,10 +1,28 @@
-import{test, expect} from '@playwright/test';
+import { test, expect } from '@playwright/test';
 
-test('login com usuário valido', async ({page})=> {
-    await page.goto('/');
-    await page.getByTestId('username').fill('standard_user');
-    await page.getByTestId('password').fill('secret_sauce');
-    await page.getByRole('button', {name:'Login'}).click();
-    await expect(page).toHaveURL(/inventory/);
 
+test.describe('Login', () => {
+    test.beforeEach(async ({ page }) => {
+        await page.goto('/');
+    });
+    test('com usuário valido', async ({ page }) => {
+
+        await page.getByTestId('username').fill('standard_user');
+        await page.getByTestId('password').fill('secret_sauce');
+        await page.getByRole('button', { name: 'Login' }).click();
+        await expect(page).toHaveURL(/inventory/);
+
+    });
+    test('com usuário bloqueado', async ({ page }) => {
+        await page.getByTestId('username').fill('locked_out_user');
+        await page.getByTestId('password').fill('secret_sauce');
+        await page.getByRole('button', { name: 'Login' }).click();
+        await expect(page.getByTestId('error')).toHaveText('Epic sadface: Sorry, this user has been locked out.');
+    });
+    test('sem senha', async ({ page }) => {
+        await page.getByTestId('username').fill('standard_user');
+        await page.getByRole('button', { name: 'Login' }).click();
+        await expect(page.getByTestId('error')).toHaveText('Epic sadface: Password is required');
+    });
 });
+
