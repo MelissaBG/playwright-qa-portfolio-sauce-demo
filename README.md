@@ -5,8 +5,6 @@
    ## Como rodar
    - npm install
    - npx playwright install
-<<<<<<< HEAD
    - npx playwright test
-=======
    - npx playwright test
->>>>>>> 3484388 (chore: adiciona tsconfig)
+
