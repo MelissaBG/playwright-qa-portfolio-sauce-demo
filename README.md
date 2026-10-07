@@ -3,6 +3,6 @@
    Projeto de automação de testes com Playwright e TypeScript.
 
    ## Como rodar
-   npm install
-   npx playwright install
-   npx playwright test
+   - npm install
+   - npx playwright install
+   - npx playwright test
