@@ -8,3 +8,10 @@
    - npx playwright test
    - npx playwright test
 
+## Cenários cobertos
+
+| Funcionalidade | Cenário | Tipo |
+| --- | --- | --- |
+| Login | Login com usuário válido | Positivo |
+| Login | Login com usuário bloqueado | Negativo |
+| Login | Login sem senha | Negativo |
