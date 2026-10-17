@@ -2,7 +2,7 @@
 
 **Sistema:** https://www.saucedemo.com
 **Responsável:** Melissa Goulart
-**Sprint:** Sprint de recuperação (13/10 a 17/10/2026)
+**Sprint:** Sprint de recuperação (iniciada em 13/10/2026)
 
 ## 1. Escopo
 
@@ -78,8 +78,17 @@
 | Descrição da Sauce Labs Bolt T-Shirt ("heather gray") não corresponde à imagem (camiseta preta) | Conteúdo | Baixa | A reportar |
 | Formulário exibe apenas um erro por vez | Usabilidade | Baixa | Observação, sem defeito |
 | Sessão expira após período de inatividade e redireciona ao login | Comportamento do sistema | Não se aplica | Esperado; testes devem ser independentes e curtos |
+| Formulário de checkout limpava o primeiro campo quando preenchido logo após a página abrir (WebKit) | Instabilidade da automação | Não se aplica | Corrigido na automação (16/10) |
 
 **Lição registrada:** na primeira tentativa do CT-12, a finalização redirecionou para o login. A reprodução com sessão nova mostrou que a causa era a expiração da sessão, e não o carrinho vazio. Todo defeito é reproduzido antes de ser reportado.
+
+**Instabilidade da automação no WebKit (15/10 e 16/10):** os testes do formulário de checkout falhavam de forma intermitente, porque o primeiro campo era apagado enquanto a página terminava de carregar. A investigação passou por três etapas:
+
+1. Sincronizar a navegação e conferir cada campo após o preenchimento: a taxa de falha caiu de 20% para 4%.
+2. A evidência do estado da página no momento da falha mostrou o primeiro campo vazio e os demais preenchidos, o que descartou a hipótese anterior.
+3. Correção: digitação tecla a tecla e conferência dos três campos juntos, com nova tentativa controlada. Validado com 2 rodadas de 80 execuções no WebKit, sem falhas.
+
+Não é um defeito do sistema para o usuário, e sim uma condição de tempo que afeta a automação.
 
 ## 6. Critérios de entrada e saída
 
@@ -89,10 +98,20 @@
 
 ## 7. Cronograma
 
-| Data | Entrega |
-| --- | --- |
-| Ter 13/10 | Plano de testes e automação de carrinho e checkout |
-| Qua 14/10 | Page Objects, fixtures e testes orientados a dados |
-| Qui 15/10 | Testes de API e testes híbridos |
-| Sex 16/10 | Pipeline, relatório, testes visuais e de acessibilidade, reporte de bugs |
-| Sáb 17/10 | Estratégia, métricas, README final e retrospectiva |
+| Etapa | Entrega | Situação |
+| --- | --- | --- |
+| 1 | Gestão: quadro, milestone e issues | Concluído |
+| 2 | Plano de testes | Concluído |
+| 3 | Automação de carrinho e checkout | Concluído |
+| 4 | Page Object Model | Concluído |
+| 5 | Fixtures e login reaproveitado (storageState) | Concluído |
+| 6 | Dados em JSON, variáveis de ambiente e tags | Planejado |
+| 7 | Testes de API | Planejado |
+| 8 | Teste híbrido: API e interface | Planejado |
+| 9 | Mock de rede | Planejado |
+| 10 | Pipeline e relatório público | Planejado |
+| 11 | Testes visuais e de acessibilidade | Planejado |
+| 12 | Reporte de bugs | Planejado |
+| 13 | Estratégia e métricas | Planejado |
+| 14 | README final | Planejado |
+| 15 | Retrospectiva e divulgação | Planejado |
