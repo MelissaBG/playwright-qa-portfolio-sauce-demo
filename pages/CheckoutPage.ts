@@ -1,5 +1,4 @@
-import { Page, Locator } from '@playwright/test';
-
+import { Page, Locator, expect } from '@playwright/test'; 
 export class CheckoutPage {
   readonly page: Page;
   readonly firstNameInput: Locator;
@@ -21,10 +20,22 @@ export class CheckoutPage {
     this.completeHeader = page.getByTestId('complete-header');
   }
 
+  private async typeInto(input: Locator, value: string) {
+    await input.clear();
+    if (value) {
+      await input.pressSequentially(value);
+    }
+  }
+
   async fillInformation(firstName: string, lastName: string, postalCode: string) {
-    await this.firstNameInput.fill(firstName);
-    await this.lastNameInput.fill(lastName);
-    await this.postalCodeInput.fill(postalCode);
+    await expect(async () => {
+      await this.typeInto(this.firstNameInput, firstName);
+      await this.typeInto(this.lastNameInput, lastName);
+      await this.typeInto(this.postalCodeInput, postalCode);
+      await expect(this.firstNameInput).toHaveValue(firstName, { timeout: 500 });
+      await expect(this.lastNameInput).toHaveValue(lastName, { timeout: 500 });
+      await expect(this.postalCodeInput).toHaveValue(postalCode, { timeout: 500 });
+    }).toPass({ timeout: 10000 });
   }
 
   async continueCheckout() {
