@@ -14,7 +14,6 @@
 - Checkout: formulário de dados, resumo e confirmação do pedido.
 
 **Fora do escopo**
-
 | Item | Motivo |
 | --- | --- |
 | Performance e carga | Site de demonstração público, sem ambiente dedicado nem metas de tempo de resposta |
